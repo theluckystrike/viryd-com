@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIY Home Energy Audit Checklist - Viryd</title>
+<meta name="description" content="Walk through a room-by-room DIY energy audit checklist to find where your home loses the most energy. Get a score, savings estimate, and top priorities to fix first.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://viryd.com/tools/energy-audit-checklist/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="DIY Home Energy Audit Checklist - Viryd">
+<meta property="og:description" content="Walk through a room-by-room DIY energy audit checklist to find where your home loses the most energy. Get a score, savings estimate, and top priorities to fix first.">
+<meta property="og:url" content="https://viryd.com/tools/energy-audit-checklist/">
+<meta property="og:site_name" content="Viryd">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DIY Home Energy Audit Checklist - Viryd">
+<meta name="twitter:description" content="Walk through a room-by-room DIY energy audit checklist to find where your home loses the most energy. Get a score, savings estimate, and top priorities to fix first.">
+
+<link rel="stylesheet" href="/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DIY Home Energy Audit Checklist",
+  "url": "https://viryd.com/tools/energy-audit-checklist/",
+  "description": "Interactive checklist that walks you through a room-by-room home energy audit with scoring, savings estimates, and prioritized recommendations.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "Organization",
+    "name": "Viryd",
+    "url": "https://viryd.com/"
+  }
+}
+</script>
+
+<style>
+.audit-intro {
+  margin-bottom: 40px;
+}
+.audit-intro p {
+  font-size: 1rem;
+  color: var(--text);
+}
+.section-block {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.section-block h2 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+}
+.section-progress {
+  font-size: .85rem;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+.audit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.audit-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.audit-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 2px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.audit-item label {
+  cursor: pointer;
+  flex: 1;
+}
+.audit-item .item-title {
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+}
+.audit-item .item-desc {
+  font-size: .88rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+.results-panel {
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  margin: 40px 0;
+  display: none;
+}
+.results-panel.visible {
+  display: block;
+}
+.results-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.score-display {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.score-label {
+  font-size: 1rem;
+  opacity: .85;
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.result-card {
+  background: rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: 16px;
+}
+.result-card .rc-label {
+  font-size: .85rem;
+  opacity: .8;
+  margin-bottom: 4px;
+}
+.result-card .rc-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.priorities-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.priorities-list li {
+  background: rgba(255,255,255,.12);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: .95rem;
+  line-height: 1.4;
+}
+.priorities-list li:last-child {
+  margin-bottom: 0;
+}
+.priority-num {
+  font-weight: 700;
+  margin-right: 8px;
+  opacity: .7;
+}
+.priorities-heading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,.5);
+  background: transparent;
+  color: #fff;
+  font-size: .95rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s, border-color .2s;
+}
+.btn:hover {
+  background: rgba(255,255,255,.15);
+  border-color: #fff;
+}
+.overall-bar {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 5;
+}
+.bar-track {
+  background: var(--border);
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.bar-fill {
+  background: var(--green);
+  height: 100%;
+  width: 0;
+  border-radius: 5px;
+  transition: width .4s ease;
+}
+.bar-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+  color: var(--text-light);
+}
+.bar-text strong {
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+  .score-display {
+    font-size: 2.8rem;
+  }
+  .results-panel {
+    padding: 24px 16px;
+  }
+  .section-block {
+    padding: 16px;
+  }
+  .overall-bar {
+    padding: 14px 16px;
+  }
+}
+
+@media print {
+  nav, .overall-bar, .btn-row, footer {
+    display: none;
+  }
+  .results-panel {
+    display: block;
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+    padding: 20px;
+    break-inside: avoid;
+  }
+  .results-panel .score-display {
+    color: #000;
+  }
+  .results-panel .score-label,
+  .results-panel .rc-label {
+    color: #333;
+    opacity: 1;
+  }
+  .results-panel .rc-value {
+    color: #000;
+  }
+  .result-card {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+  }
+  .priorities-list li {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #000;
+  }
+  .priority-num {
+    opacity: 1;
+  }
+  .section-block {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    background: #fff;
+  }
+  .audit-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #000;
+    border-radius: 2px;
+    position: relative;
+  }
+  .audit-item input[type="checkbox"]:checked::after {
+    content: "\2713";
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    font-size: 14px;
+  }
+  body {
+    font-size: 11pt;
+  }
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+  .priorities-heading {
+    color: #000;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Viryd</a>
+  <div class="nav-links">
+    <a href="/#articles">Articles</a>
+    <a href="/#tools">Tools</a>
+    <a href="/#about">About</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/#tools">Tools</a> &rsaquo; Energy Audit Checklist
+  </nav>
+
+  <h1>DIY Home Energy Audit Checklist</h1>
+
+  <div class="audit-intro">
+    <p>A professional home energy audit runs about $300 and takes half a day. The auditor shows up with a blower door and an infrared camera, checking for air leaks, insulation gaps, and equipment problems. The report is genuinely useful.</p>
+    <p>But here is what I learned after going through that process: roughly 80% of what the auditor found, I could have caught on my own with a flashlight and an hour of focused attention. The attic insulation was thin in the corners. Two windows had visible daylight around the weatherstripping. The furnace filter was three months overdue. The water heater was set to 140 degrees when 120 would have been fine. None of that needed special equipment to spot.</p>
+    <p>The professional audit earned its fee on the remaining 20%, the blower door test that measured exactly how leaky the house was and the thermal camera that found a missing insulation bay behind the guest room wall. Those findings mattered, but the biggest savings came from the obvious stuff I could have fixed months earlier with a simple walkthrough.</p>
+    <p>That is what this tool does. It covers the same categories a professional auditor checks, one system at a time. Mark what you have already addressed, and it will score your home, estimate your savings potential, and tell you which three items to fix first. You need about 45 minutes and a willingness to look in the attic.</p>
+    <p>If you finish and still want the professional audit, go for it. Most people find that working through these items first saves them more than the audit would have cost.</p>
+  </div>
+
+  <div class="overall-bar" id="overallBar">
+    <div class="bar-text">
+      <span><strong id="checkedCount">0</strong> of <strong id="totalCount">0</strong> items checked</span>
+      <span id="percentText">0%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" id="barFill"></div>
+    </div>
+  </div>
+
+  <div id="auditSections"></div>
+
+  <div class="results-panel" id="resultsPanel">
+    <div class="results-header">
+      <div class="score-display" id="scoreDisplay">0%</div>
+      <div class="score-label">Energy Efficiency Score</div>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="rc-label">Items Addressed</div>
+        <div class="rc-value" id="resultsChecked">0 / 0</div>
+      </div>
+      <div class="result-card">
+        <div class="rc-label">Est. Annual Savings Potential</div>
+        <div class="rc-value" id="resultsSavings">$0</div>
+      </div>
+    </div>
+    <div class="priorities-heading">Top Priorities to Address First</div>
+    <ol class="priorities-list" id="prioritiesList"></ol>
+    <div class="btn-row">
+      <button class="btn" onclick="window.print()">Print This Report</button>
+      <button class="btn" onclick="resetAll()">Reset Checklist</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Viryd. All rights reserved.</p>
+</footer>
+
+<script>
+(function() {
+  "use strict";
+
+  var SECTIONS = [
+    {
+      id: "insulation",
+      title: "Insulation",
+      items: [
+        {
+          id: "ins-attic",
+          title: "Attic insulation depth",
+          desc: "Measure the depth of insulation in your attic. Most climates need R-38 to R-60, which is about 10 to 16 inches of fiberglass batts or blown-in cellulose.",
+          savings: 180,
+          priority: 2
+        },
+        {
+          id: "ins-walls",
+          title: "Exterior wall insulation",
+          desc: "Check an exterior wall by removing an outlet cover plate on an outside wall. You should see insulation behind it. Empty wall cavities are a major heat loss path.",
+          savings: 150,
+          priority: 3
+        },
+        {
+          id: "ins-basement",
+          title: "Basement or foundation walls",
+          desc: "Uninsulated basement walls lose a surprising amount of heat. Rigid foam board (R-10 to R-15) on basement walls can cut heating costs noticeably.",
+          savings: 100,
+          priority: 5
+        },
+        {
+          id: "ins-crawl",
+          title: "Crawlspace insulation",
+          desc: "If you have a crawlspace, check whether the floor joists above it are insulated or whether the crawlspace walls are lined with rigid foam. One or the other should be in place.",
+          savings: 90,
+          priority: 6
+        },
+        {
+          id: "ins-rvalue",
+          title: "R-values meet local recommendations",
+          desc: "Look up your climate zone at energystar.gov and compare their recommended R-values against what you measured in the attic, walls, and floor. Gaps here are the lowest-hanging fruit.",
+          savings: 120,
+          priority: 4
+        }
+      ]
+    },
+    {
+      id: "airsealing",
+      title: "Air Sealing",
+      items: [
+        {
+          id: "air-windows",
+          title: "Window seals and weatherstripping",
+          desc: "Hold a lit incense stick or thin piece of tissue near window edges on a windy day. Movement means air is getting through. Weatherstripping and caulk fix most window leaks for under $5 each.",
+          savings: 80,
+          priority: 7
+        },
+        {
+          id: "air-doors",
+          title: "Exterior door seals",
+          desc: "Close each exterior door on a dollar bill. If you can pull the bill out easily, the seal is not tight enough. Door sweeps and new weatherstripping are cheap and take 20 minutes to install.",
+          savings: 60,
+          priority: 9
+        },
+        {
+          id: "air-outlets",
+          title: "Outlet and switch plate gaskets",
+          desc: "Outlets on exterior walls often leak cold air. Foam gaskets that fit behind the cover plate cost about 25 cents each and block that airflow path.",
+          savings: 25,
+          priority: 15
+        },
+        {
+          id: "air-attic-hatch",
+          title: "Attic hatch or pull-down stair seal",
+          desc: "The attic access point is often the single biggest air leak in the house. Weatherstrip the edges and add an insulated cover if you have a pull-down staircase.",
+          savings: 70,
+          priority: 8
+        },
+        {
+          id: "air-ductwork",
+          title: "Ductwork sealed at joints",
+          desc: "Look at the visible ductwork in your basement or attic. Gaps at joints and connections leak conditioned air before it reaches the rooms you are heating or cooling. Mastic sealant works better than tape for long-term fixes.",
+          savings: 130,
+          priority: 1
+        }
+      ]
+    },
+    {
+      id: "hvac",
+      title: "HVAC",
+      items: [
+        {
+          id: "hvac-filter",
+          title: "Air filter replaced within last 90 days",
+          desc: "A clogged filter forces the system to work harder and run longer. Check the filter now. If you cannot see light through it, replace it today.",
+          savings: 45,
+          priority: 13
+        },
+        {
+          id: "hvac-age",
+          title: "System is less than 15 years old",
+          desc: "Find the manufacture date on your furnace or heat pump nameplate. Systems older than 15 years are typically half as efficient as current models and approaching the end of their reliable lifespan.",
+          savings: 200,
+          priority: 10
+        },
+        {
+          id: "hvac-duct-leaks",
+          title: "No visible duct leaks or disconnected runs",
+          desc: "Walk through the basement and attic looking at every section of ductwork. Disconnected or crushed flex duct in the attic is especially common and means you are heating or cooling the attic instead of the room.",
+          savings: 140,
+          priority: 11
+        },
+        {
+          id: "hvac-thermostat",
+          title: "Programmable or smart thermostat installed",
+          desc: "A basic programmable thermostat costs under $30 and saves 8 to 12 percent on heating and cooling by automatically adjusting when you are asleep or away.",
+          savings: 110,
+          priority: 12
+        },
+        {
+          id: "hvac-vents",
+          title: "All supply vents open and unblocked",
+          desc: "Walk through every room and check that supply and return vents are open and not blocked by furniture, rugs, or curtains. Blocked vents create pressure imbalances that reduce system efficiency.",
+          savings: 30,
+          priority: 16
+        }
+      ]
+    },
+    {
+      id: "waterheating",
+      title: "Water Heating",
+      items: [
+        {
+          id: "wh-age",
+          title: "Water heater is less than 10 years old",
+          desc: "Check the serial number or label for the manufacture date. Tank water heaters typically last 8 to 12 years. A failing unit wastes energy through sediment buildup and declining insulation.",
+          savings: 80,
+          priority: 14
+        },
+        {
+          id: "wh-temp",
+          title: "Temperature set to 120 degrees F",
+          desc: "Most water heaters ship set to 140 degrees. Turning it down to 120 saves 6 to 10 percent on water heating costs and reduces scalding risk without noticeably affecting comfort.",
+          savings: 50,
+          priority: 17
+        },
+        {
+          id: "wh-pipes",
+          title: "Hot water pipes insulated",
+          desc: "Insulating the first 6 feet of hot and cold pipes at the water heater with foam pipe sleeves costs about $5 and reduces standby heat loss, especially if pipes run through unheated spaces.",
+          savings: 25,
+          priority: 20
+        },
+        {
+          id: "wh-blanket",
+          title: "Tank insulation blanket installed (if older unit)",
+          desc: "For tanks older than 5 years, an insulation blanket wrap (about $20 at any hardware store) reduces standby heat loss. Touch the outside of your tank. If it feels warm, it is losing heat.",
+          savings: 35,
+          priority: 19
+        }
+      ]
+    },
+    {
+      id: "lighting",
+      title: "Lighting",
+      items: [
+        {
+          id: "light-led",
+          title: "All high-use bulbs are LED",
+          desc: "Identify the 10 lights you use the most (kitchen, living room, porch). If any are still incandescent or CFL, switching to LED pays for itself within a few months at today's prices.",
+          savings: 75,
+          priority: 18
+        },
+        {
+          id: "light-hours",
+          title: "Lights turned off in unoccupied rooms",
+          desc: "This sounds obvious, but habitual lights-on-in-empty-rooms adds up. Consider motion-sensor switches for bathrooms, garages, and hallways where people forget.",
+          savings: 30,
+          priority: 22
+        },
+        {
+          id: "light-outdoor",
+          title: "Outdoor lights on timers or sensors",
+          desc: "Porch lights, driveway lights, and yard lighting that run all night waste energy. A dusk-to-dawn sensor or simple timer keeps them on only when needed.",
+          savings: 20,
+          priority: 23
+        }
+      ]
+    },
+    {
+      id: "appliances",
+      title: "Appliances",
+      items: [
+        {
+          id: "app-fridge",
+          title: "Refrigerator is less than 15 years old",
+          desc: "Check the model year on the nameplate inside the door. Refrigerators made before 2010 can use two to three times more electricity than current Energy Star models.",
+          savings: 100,
+          priority: 21
+        },
+        {
+          id: "app-washer",
+          title: "Washing machine is front-load or HE top-load",
+          desc: "High-efficiency washers use about 40% less water and 25% less energy per load compared to traditional top-loaders. They also extract more water during spin, reducing dryer time.",
+          savings: 50,
+          priority: 24
+        },
+        {
+          id: "app-dryer",
+          title: "Dryer vent clean and unrestricted",
+          desc: "Pull the dryer away from the wall and disconnect the vent. Clean out any lint buildup in the vent and the duct that runs to the outside. A clogged vent makes every load take longer and creates a fire hazard.",
+          savings: 40,
+          priority: 25
+        },
+        {
+          id: "app-phantom",
+          title: "Phantom loads addressed with power strips",
+          desc: "Electronics in standby mode draw 5 to 10 watts each. A typical home has 20 to 40 devices doing this, adding up to $100 or more per year. Smart power strips cut power to devices when the main device is off.",
+          savings: 65,
+          priority: 26
+        }
+      ]
+    }
+  ];
+
+  var totalItems = 0;
+  var allItems = [];
+  var sectionMap = {};
+
+  function init() {
+    var container = document.getElementById("auditSections");
+    if (container === null) { return; }
+
+    SECTIONS.forEach(function(section) {
+      totalItems += section.items.length;
+      sectionMap[section.id] = section;
+      section.items.forEach(function(item) {
+        allItems.push(item);
+      });
+    });
+
+    document.getElementById("totalCount").textContent = totalItems;
+    renderSections(container);
+    loadState();
+    updateProgress();
+  }
+
+  function renderSections(container) {
+    var html = "";
+
+    SECTIONS.forEach(function(section) {
+      html += '<div class="section-block" data-section="' + section.id + '">';
+      html += '<h2>' + section.title + '</h2>';
+      html += '<div class="section-progress" id="progress-' + section.id + '">0 of ' + section.items.length + ' checked</div>';
+
+      section.items.forEach(function(item) {
+        html += '<div class="audit-item">';
+        html += '<input type="checkbox" id="' + item.id + '" onchange="window._auditChange()">';
+        html += '<label for="' + item.id + '">';
+        html += '<span class="item-title">' + item.title + '</span>';
+        html += '<span class="item-desc">' + item.desc + '</span>';
+        html += '</label>';
+        html += '</div>';
+      });
+
+      html += '</div>';
+    });
+
+    container.innerHTML = html;
+  }
+
+  function getCheckedItems() {
+    var checked = [];
+    var unchecked = [];
+
+    allItems.forEach(function(item) {
+      var el = document.getElementById(item.id);
+      if (el !== null && el.checked) {
+        checked.push(item);
+      } else {
+        unchecked.push(item);
+      }
+    });
+
+    return { checked: checked, unchecked: unchecked };
+  }
+
+  function updateProgress() {
+    var result = getCheckedItems();
+    var checkedCount = result.checked.length;
+    var percent = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
+
+    document.getElementById("checkedCount").textContent = checkedCount;
+    document.getElementById("percentText").textContent = percent + "%";
+    document.getElementById("barFill").style.width = percent + "%";
+
+    SECTIONS.forEach(function(section) {
+      var sectionChecked = 0;
+      section.items.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el !== null && el.checked) { sectionChecked++; }
+      });
+      var progEl = document.getElementById("progress-" + section.id);
+      if (progEl !== null) {
+        progEl.textContent = sectionChecked + " of " + section.items.length + " checked";
+      }
+    });
+
+    updateResults(result, percent);
+    saveState();
+  }
+
+  function updateResults(result, percent) {
+    var panel = document.getElementById("resultsPanel");
+    if (panel === null) { return; }
+
+    if (result.checked.length === 0) {
+      panel.classList.remove("visible");
+      return;
+    }
+
+    panel.classList.add("visible");
+
+    document.getElementById("scoreDisplay").textContent = percent + "%";
+    document.getElementById("resultsChecked").textContent = result.checked.length + " / " + totalItems;
+
+    var totalSavings = 0;
+    result.unchecked.forEach(function(item) {
+      totalSavings += item.savings;
+    });
+    document.getElementById("resultsSavings").textContent = "$" + totalSavings.toLocaleString();
+
+    var priorities = result.unchecked.slice();
+    priorities.sort(function(a, b) { return a.priority - b.priority; });
+
+    var topThree = priorities.slice(0, 3);
+    var listEl = document.getElementById("prioritiesList");
+    var listHtml = "";
+
+    if (topThree.length === 0) {
+      listHtml = '<li>You have addressed every item on the checklist. Your home is in strong shape.</li>';
+    } else {
+      topThree.forEach(function(item, i) {
+        var sectionName = findSectionName(item.id);
+        listHtml += '<li><span class="priority-num">#' + (i + 1) + '</span>';
+        listHtml += '<strong>' + item.title + '</strong> (' + sectionName + ') ';
+        listHtml += '&mdash; potential savings of $' + item.savings + '/year</li>';
+      });
+    }
+
+    listEl.innerHTML = listHtml;
+  }
+
+  function findSectionName(itemId) {
+    for (var i = 0; i < SECTIONS.length; i++) {
+      for (var j = 0; j < SECTIONS[i].items.length; j++) {
+        if (SECTIONS[i].items[j].id === itemId) {
+          return SECTIONS[i].title;
+        }
+      }
+    }
+    return "";
+  }
+
+  function saveState() {
+    try {
+      var state = {};
+      allItems.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el !== null) {
+          state[item.id] = el.checked;
+        }
+      });
+      localStorage.setItem("viryd-energy-audit", JSON.stringify(state));
+    } catch (e) {
+      /* localStorage not available */
+    }
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem("viryd-energy-audit");
+      if (raw === null) { return; }
+      var state = JSON.parse(raw);
+      allItems.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el !== null && state[item.id] === true) {
+          el.checked = true;
+        }
+      });
+    } catch (e) {
+      /* localStorage not available or data corrupt */
+    }
+  }
+
+  window._auditChange = function() {
+    updateProgress();
+  };
+
+  window.resetAll = function() {
+    allItems.forEach(function(item) {
+      var el = document.getElementById(item.id);
+      if (el !== null) { el.checked = false; }
+    });
+    try { localStorage.removeItem("viryd-energy-audit"); } catch (e) { /* noop */ }
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
