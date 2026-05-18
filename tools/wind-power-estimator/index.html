@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wind Power Estimator for Residential Turbines - Viryd</title>
+<meta name="description" content="Estimate annual kWh production, electricity savings, and payback period for a residential wind turbine based on your wind speed, terrain, and turbine size.">
+<link rel="canonical" href="https://viryd.com/tools/wind-power-estimator/">
+<link rel="stylesheet" href="/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wind Power Estimator for Residential Turbines - Viryd">
+<meta property="og:description" content="Estimate annual kWh production, electricity savings, and payback period for a residential wind turbine based on your wind speed, terrain, and turbine size.">
+<meta property="og:url" content="https://viryd.com/tools/wind-power-estimator/">
+<meta property="og:site_name" content="Viryd">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wind Power Estimator for Residential Turbines - Viryd">
+<meta name="twitter:description" content="Estimate annual kWh production, electricity savings, and payback period for a residential wind turbine based on your wind speed, terrain, and turbine size.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Wind Power Estimator",
+  "url": "https://viryd.com/tools/wind-power-estimator/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "description": "Estimate annual kWh production, electricity savings, and payback period for a residential wind turbine based on your wind speed, terrain, and turbine size.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Viryd",
+    "url": "https://viryd.com/"
+  }
+}
+</script>
+
+<style>
+.tool-form{background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;padding:24px;margin:32px 0}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-weight:600;margin-bottom:6px;font-size:.95rem;color:var(--green-dark)}
+.form-group select,.form-group input[type="range"]{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.95rem;background:var(--bg)}
+.form-group input[type="range"]{padding:4px 0;cursor:pointer;accent-color:var(--green)}
+.slider-value{font-size:.95rem;color:var(--text-light);margin-top:4px}
+.form-group select{appearance:auto}
+.results{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:24px;margin:32px 0}
+.results h2{margin:0 0 16px;font-size:1.25rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.result-item{padding:12px;background:var(--bg-alt);border-radius:6px}
+.result-item .label{font-size:.8rem;color:var(--text-light);margin-bottom:4px}
+.result-item .value{font-size:1.3rem;font-weight:700;color:var(--green-dark)}
+.result-item .unit{font-size:.85rem;font-weight:400;color:var(--text-light)}
+.verdict-box{margin-top:16px;padding:16px;border-radius:6px;text-align:center}
+.verdict-box .verdict-label{font-size:.8rem;color:var(--text-light);margin-bottom:4px}
+.verdict-box .verdict-text{font-size:1.2rem;font-weight:700}
+.verdict-good{background:#e8f5e1;border:1px solid #2d6a1e}.verdict-good .verdict-text{color:#2d6a1e}
+.verdict-marginal{background:#fff8e1;border:1px solid #b8860b}.verdict-marginal .verdict-text{color:#b8860b}
+.verdict-bad{background:#fde8e8;border:1px solid #a82020}.verdict-bad .verdict-text{color:#a82020}
+.note{font-size:.85rem;color:var(--text-light);font-style:italic;margin-top:16px}
+@media(max-width:600px){.result-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav><a href="/">Viryd</a><div class="nav-links"><a href="/#articles">Articles</a><a href="/#tools">Tools</a></div></nav>
+
+<div class="container">
+<div class="breadcrumb"><a href="/">Home</a> / <a href="/#tools">Tools</a> / Wind power estimator</div>
+
+<article>
+<h1>Wind Power Estimator</h1>
+<div class="meta">Updated May 2026</div>
+
+<p>I built this tool because residential wind power is one of the most oversold and misunderstood topics in home energy. The marketing brochures show spinning turbines on hilltops and promise thousands in savings, but the reality for most homeowners is far less exciting. Wind energy works well at utility scale and on genuinely windy rural properties. For the average suburban lot, solar panels are almost always a better investment per dollar spent.</p>
+
+<p>That said, there are situations where a small wind turbine makes sense. If you live on acreage with consistent 12+ mph winds, few obstructions, and permissive zoning, the numbers can work in your favor. Tower height matters more than most people realize. Wind speed increases significantly as you get above the tree line and local ground turbulence, which is why a turbine on a short tower in a neighborhood rarely produces what the spec sheet promises. Terrain is the other big variable. A hilltop site with open exposure will generate two or three times the energy of a suburban lot at the same rated wind speed.</p>
+
+<p>Use this calculator to get a rough estimate for your specific situation. Plug in your local average wind speed, pick a turbine size, adjust for your terrain, and see what the payback looks like. If the verdict comes back marginal or not recommended, I would take that seriously. These estimates already use generous assumptions about availability and capacity factor.</p>
+
+<div class="tool-form">
+
+<div class="form-group">
+<label for="windSpeed">Average wind speed in your area</label>
+<input type="range" id="windSpeed" min="5" max="25" value="12" step="1">
+<div class="slider-value"><span id="windSpeedDisplay">12</span> mph</div>
+</div>
+
+<div class="form-group">
+<label for="turbineSize">Turbine rated capacity</label>
+<select id="turbineSize">
+<option value="1">1 kW</option>
+<option value="2.5" selected>2.5 kW</option>
+<option value="5">5 kW</option>
+<option value="10">10 kW</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="towerHeight">Tower height</label>
+<select id="towerHeight">
+<option value="30">30 ft</option>
+<option value="60" selected>60 ft</option>
+<option value="80">80 ft</option>
+<option value="100">100 ft</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="terrain">Terrain type</label>
+<select id="terrain">
+<option value="open">Open field</option>
+<option value="rural">Rural with trees</option>
+<option value="suburban" selected>Suburban</option>
+<option value="hilltop">Hilltop</option>
+</select>
+</div>
+
+</div>
+
+<div class="results" id="results">
+<h2>Your Estimate</h2>
+<div class="result-grid">
+<div class="result-item">
+<div class="label">Estimated annual production</div>
+<div class="value" id="annualKwh">--</div>
+</div>
+<div class="result-item">
+<div class="label">Monthly electricity offset</div>
+<div class="value" id="monthlySavings">--</div>
+</div>
+<div class="result-item">
+<div class="label">Approximate turbine + install cost</div>
+<div class="value" id="installCost">--</div>
+</div>
+<div class="result-item">
+<div class="label">Estimated payback period</div>
+<div class="value" id="paybackYears">--</div>
+</div>
+</div>
+<div class="verdict-box" id="verdictBox">
+<div class="verdict-label">Overall verdict</div>
+<div class="verdict-text" id="verdictText">--</div>
+</div>
+<p class="note" id="verdictNote"></p>
+</div>
+
+<h2>How the Math Works</h2>
+
+<p>The core formula is P = 0.5 &times; &rho; &times; A &times; V&sup3; &times; Cp &times; availability, where &rho; is air density (1.225 kg/m&sup3; at sea level), A is the swept area of the rotor, V is wind speed in meters per second, Cp is the power coefficient (capped at the Betz limit of 0.593, realistic turbines hit 0.25 to 0.35), and availability accounts for downtime from maintenance, calm days, and cut-in/cut-out speed limits.</p>
+
+<p>In practice, most residential turbines produce far less than their rated capacity. A "5 kW turbine" is rated at 5 kW in a specific design wind speed, often 25 to 28 mph. At 12 mph, that same turbine produces a fraction of its rated output. The capacity factor, meaning actual production divided by theoretical maximum, ranges from about 15% in low-wind suburban settings to 35% on windy hilltops.</p>
+
+<p>The terrain adjustment reflects how ground-level obstacles reduce effective wind speed at the rotor. Open fields have minimal friction. Suburban lots with houses, fences, and scattered trees create turbulence that cuts into production significantly. Tower height helps overcome this, which is why the industry rule of thumb is to mount your rotor at least 30 feet above anything within 500 feet. Few residential installations actually achieve this.</p>
+
+<p>Cost estimates in this tool reflect 2026 installed prices for common small wind systems, including the turbine, tower, inverter, wiring, permits, and labor. Actual quotes will vary by region and installer. The payback calculation uses the national average residential electricity rate of $0.16 per kWh. If your rate is higher, payback will be shorter. If you have cheap power, it will be longer.</p>
+
+<h2>When Wind Actually Makes Sense</h2>
+
+<p>The sweet spot for residential wind is a rural property with at least half an acre of open land, average winds above 12 mph, and a tower tall enough to clear any obstacles. Hilltop sites are even better because they get natural wind acceleration from the terrain. If you have all three of those factors, a 5 kW or 10 kW turbine can meaningfully offset your electric bill and pay for itself within a reasonable timeframe.</p>
+
+<p>The honest answer for most suburban homeowners is that solar panels on your roof will produce more energy per dollar invested, require less maintenance, face fewer zoning hurdles, and deliver a faster payback. I say this as someone who finds wind turbines genuinely interesting. The physics just favor solar for most residential situations in 2026.</p>
+
+<p>If you want to explore further, check your area's wind resource on the <a href="https://windexchange.energy.gov/small-wind-guidebook">DOE Small Wind Guidebook</a> and talk to your local zoning office before getting any quotes. Many municipalities have height restrictions that make effective residential wind installations impossible regardless of your wind speed.</p>
+
+</article>
+</div>
+
+<footer><p>2026 Viryd. Independent energy guides.</p></footer>
+
+<script>
+(function() {
+  "use strict";
+
+  var ELEC_RATE = 0.16;
+  var AIR_DENSITY = 1.225;
+  var HOURS_PER_YEAR = 8760;
+  var MPH_TO_MS = 0.44704;
+
+  var TURBINE_DATA = {
+    "1":   { rotor: 2.6,  cost: 8000,  cp: 0.28 },
+    "2.5": { rotor: 4.0,  cost: 15000, cp: 0.30 },
+    "5":   { rotor: 5.6,  cost: 28000, cp: 0.32 },
+    "10":  { rotor: 7.8,  cost: 55000, cp: 0.33 }
+  };
+
+  var TERRAIN_FACTORS = {
+    "open":     1.0,
+    "rural":    0.75,
+    "suburban":  0.55,
+    "hilltop":  1.20
+  };
+
+  var TOWER_FACTORS = {
+    "30":  0.70,
+    "60":  0.90,
+    "80":  1.00,
+    "100": 1.08
+  };
+
+  var windSlider = document.getElementById("windSpeed");
+  var windDisplay = document.getElementById("windSpeedDisplay");
+  var turbineSelect = document.getElementById("turbineSize");
+  var towerSelect = document.getElementById("towerHeight");
+  var terrainSelect = document.getElementById("terrain");
+
+  if (!windSlider || !windDisplay || !turbineSelect || !towerSelect || !terrainSelect) {
+    return;
+  }
+
+  function clamp(val, lo, hi) {
+    if (val < lo) { return lo; }
+    if (val > hi) { return hi; }
+    return val;
+  }
+
+  function getCapacityFactor(windMph, terrainKey) {
+    var base = 0.0;
+    if (windMph <= 7) {
+      base = 0.10;
+    } else if (windMph <= 10) {
+      base = 0.10 + (windMph - 7) * 0.02;
+    } else if (windMph <= 15) {
+      base = 0.16 + (windMph - 10) * 0.025;
+    } else if (windMph <= 20) {
+      base = 0.285 + (windMph - 15) * 0.015;
+    } else {
+      base = 0.36 + (windMph - 20) * 0.005;
+    }
+
+    if (terrainKey === "hilltop") {
+      base = base * 1.10;
+    } else if (terrainKey === "suburban") {
+      base = base * 0.80;
+    } else if (terrainKey === "rural") {
+      base = base * 0.90;
+    }
+
+    return clamp(base, 0.05, 0.40);
+  }
+
+  function formatNumber(n) {
+    return Math.round(n).toLocaleString("en-US");
+  }
+
+  function formatCurrency(n) {
+    if (n >= 1000) {
+      return "$" + formatNumber(n);
+    }
+    return "$" + n.toFixed(0);
+  }
+
+  function calculate() {
+    var windMph = parseInt(windSlider.value, 10);
+    var turbineKey = turbineSelect.value;
+    var towerKey = towerSelect.value;
+    var terrainKey = terrainSelect.value;
+
+    var turbine = TURBINE_DATA[turbineKey];
+    var terrainFactor = TERRAIN_FACTORS[terrainKey];
+    var towerFactor = TOWER_FACTORS[towerKey];
+
+    if (!turbine) { return; }
+    if (typeof terrainFactor === "undefined") { return; }
+    if (typeof towerFactor === "undefined") { return; }
+
+    var effectiveWindMph = windMph * terrainFactor * towerFactor;
+    var effectiveWindMs = effectiveWindMph * MPH_TO_MS;
+
+    var sweptArea = Math.PI * turbine.rotor * turbine.rotor;
+
+    var theoreticalPowerW = 0.5 * AIR_DENSITY * sweptArea * Math.pow(effectiveWindMs, 3) * turbine.cp;
+
+    var ratedCapacityW = parseFloat(turbineKey) * 1000;
+    var actualPowerW = Math.min(theoreticalPowerW, ratedCapacityW);
+
+    var capacityFactor = getCapacityFactor(effectiveWindMph, terrainKey);
+
+    var availability = 0.90;
+    var annualKwh = (actualPowerW / 1000) * HOURS_PER_YEAR * capacityFactor * availability;
+
+    annualKwh = Math.max(annualKwh, 0);
+
+    var monthlySavings = (annualKwh / 12) * ELEC_RATE;
+    var annualSavings = annualKwh * ELEC_RATE;
+    var installCost = turbine.cost;
+
+    var paybackYears = 0;
+    if (annualSavings > 0) {
+      paybackYears = installCost / annualSavings;
+    }
+
+    document.getElementById("annualKwh").textContent = formatNumber(annualKwh) + " kWh";
+    document.getElementById("monthlySavings").textContent = formatCurrency(monthlySavings) + "/mo";
+    document.getElementById("installCost").textContent = formatCurrency(installCost);
+
+    if (paybackYears > 0 && paybackYears < 100) {
+      document.getElementById("paybackYears").textContent = paybackYears.toFixed(1) + " years";
+    } else {
+      document.getElementById("paybackYears").textContent = "50+ years";
+    }
+
+    var verdictBox = document.getElementById("verdictBox");
+    var verdictText = document.getElementById("verdictText");
+    var verdictNote = document.getElementById("verdictNote");
+
+    verdictBox.className = "verdict-box";
+
+    if (paybackYears > 0 && paybackYears <= 12 && annualKwh >= 500) {
+      verdictBox.classList.add("verdict-good");
+      verdictText.textContent = "Good candidate";
+      verdictNote.textContent = "Your site conditions suggest wind could be a reasonable investment. Get quotes from at least two certified installers and verify your actual wind resource with a site assessment before committing.";
+    } else if (paybackYears > 0 && paybackYears <= 25 && annualKwh >= 200) {
+      verdictBox.classList.add("verdict-marginal");
+      verdictText.textContent = "Marginal";
+      verdictNote.textContent = "The payback is long enough that solar panels would likely deliver better returns for the same budget. Wind might still make sense if you have specific site advantages not captured here, such as consistent wind corridors or net metering at a favorable rate.";
+    } else {
+      verdictBox.classList.add("verdict-bad");
+      verdictText.textContent = "Not recommended";
+      verdictNote.textContent = "At these conditions, a wind turbine is unlikely to pay for itself within its useful lifespan. Consider rooftop or ground-mount solar instead, or look into community solar programs if your roof is not suitable.";
+    }
+
+    windDisplay.textContent = windMph;
+  }
+
+  windSlider.addEventListener("input", calculate);
+  turbineSelect.addEventListener("change", calculate);
+  towerSelect.addEventListener("change", calculate);
+  terrainSelect.addEventListener("change", calculate);
+
+  calculate();
+})();
+</script>
+
+</body>
+</html>
