@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Solar Savings Calculator - Estimate Your Payback and System Size</title>
+<meta name="description" content="Estimate your solar panel system size, 25-year savings, federal tax credit, and payback period based on your electric bill, state, and roof conditions.">
+<link rel="canonical" href="https://viryd.com/tools/solar-savings-calculator/">
+<meta property="og:title" content="Solar Savings Calculator - Estimate Your Payback and System Size">
+<meta property="og:description" content="Estimate your solar panel system size, 25-year savings, federal tax credit, and payback period based on your electric bill, state, and roof conditions.">
+<meta property="og:url" content="https://viryd.com/tools/solar-savings-calculator/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Solar Savings Calculator">
+<meta name="twitter:description" content="Estimate your solar panel system size, 25-year savings, federal tax credit, and payback period.">
+<link rel="stylesheet" href="/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Solar Savings Calculator",
+  "url": "https://viryd.com/tools/solar-savings-calculator/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "description": "Estimate your solar panel system size, 25-year savings, federal tax credit, and payback period based on your electric bill, state, and roof conditions.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Viryd",
+    "url": "https://viryd.com/"
+  }
+}
+</script>
+
+<style>
+.tool-container {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 24px;
+  margin: 32px 0;
+}
+.tool-container label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.tool-container .field-hint {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+.tool-container input,
+.tool-container select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.tool-container input:focus,
+.tool-container select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(45, 106, 30, 0.15);
+}
+.tool-container .input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.calc-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+.calc-btn:hover {
+  background: var(--green-dark);
+}
+.results-panel {
+  display: none;
+  margin-top: 32px;
+}
+.results-panel.visible {
+  display: block;
+}
+.results-panel h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.result-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.result-card .result-label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.result-card .result-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  line-height: 1.3;
+}
+.result-card .result-detail {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.result-card.highlight {
+  background: var(--green-light);
+  border-color: var(--green);
+}
+.results-note {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.error-msg {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  display: none;
+}
+@media (max-width: 600px) {
+  .tool-container .input-row {
+    grid-template-columns: 1fr;
+  }
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+  .tool-container {
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Viryd</a>
+  <div class="nav-links">
+    <a href="/#articles">Articles</a>
+    <a href="/#tools">Tools</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<div class="breadcrumb"><a href="/">Home</a> / <a href="/#tools">Tools</a> / Solar Savings Calculator</div>
+
+<h1>Solar Savings Calculator</h1>
+<div class="meta">Updated May 2026</div>
+
+<p>I built this calculator after going through the solar quoting process myself and realizing that most online estimators are just lead generation forms in disguise. You enter your address, and three minutes later your phone starts ringing.</p>
+
+<p>This one works differently. Everything runs in your browser. Nothing gets sent anywhere. You plug in your monthly electric bill, pick your state and roof details, and the calculator estimates your system size, annual production, 25-year savings, and payback period. It uses real averages for peak sun hours by state, current installation costs around $3.00 per watt, the 30% federal tax credit, and a 3% annual electricity inflation rate for the long-term projection.</p>
+
+<p>A few things this tool cannot account for: your specific utility's net metering policy, state-level rebates that vary wildly by zip code, time-of-use rate structures, and the actual condition of your roof. The numbers here are directional estimates to help you decide whether solar is worth investigating further. They are not a substitute for getting real quotes from local installers who can assess your specific situation. Treat the output as a starting point for the conversation, not the final answer.</p>
+
+<div class="tool-container">
+
+  <div class="input-row">
+    <div>
+      <label for="monthly-bill">Monthly Electricity Bill</label>
+      <div class="field-hint">Your average monthly bill in dollars</div>
+      <input type="number" id="monthly-bill" min="20" max="2000" step="1" placeholder="150">
+    </div>
+    <div>
+      <label for="elec-rate">Electricity Rate ($/kWh)</label>
+      <div class="field-hint">Check your bill or use the default</div>
+      <input type="number" id="elec-rate" min="0.05" max="0.60" step="0.01" value="0.15">
+    </div>
+  </div>
+
+  <label for="state-select">State</label>
+  <div class="field-hint">Peak sun hours vary by location</div>
+  <select id="state-select">
+    <option value="" disabled selected>Select your state</option>
+    <option value="AZ">Arizona</option>
+    <option value="CA">California</option>
+    <option value="CO">Colorado</option>
+    <option value="CT">Connecticut</option>
+    <option value="FL">Florida</option>
+    <option value="GA">Georgia</option>
+    <option value="HI">Hawaii</option>
+    <option value="IL">Illinois</option>
+    <option value="MA">Massachusetts</option>
+    <option value="MD">Maryland</option>
+    <option value="NC">North Carolina</option>
+    <option value="NJ">New Jersey</option>
+    <option value="NM">New Mexico</option>
+    <option value="NV">Nevada</option>
+    <option value="NY">New York</option>
+    <option value="OH">Ohio</option>
+    <option value="PA">Pennsylvania</option>
+    <option value="SC">South Carolina</option>
+    <option value="TX">Texas</option>
+    <option value="VA">Virginia</option>
+  </select>
+
+  <div class="input-row">
+    <div>
+      <label for="orientation">Roof Orientation</label>
+      <div class="field-hint">Direction your main roof faces</div>
+      <select id="orientation">
+        <option value="1.00">South</option>
+        <option value="0.90">Southwest</option>
+        <option value="0.80">West</option>
+        <option value="0.75">East</option>
+      </select>
+    </div>
+    <div>
+      <label for="shading">Shading Conditions</label>
+      <div class="field-hint">Trees, buildings, or other obstructions</div>
+      <select id="shading">
+        <option value="1.00">None</option>
+        <option value="0.80">Partial</option>
+        <option value="0.60">Significant</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="error-msg" id="error-msg"></div>
+
+  <button class="calc-btn" id="calc-btn" type="button">Calculate My Solar Savings</button>
+
+</div>
+
+<div class="results-panel" id="results-panel">
+  <h2>Your Estimated Solar Savings</h2>
+
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-label">Estimated System Size</div>
+      <div class="result-value" id="r-system-size">--</div>
+      <div class="result-detail" id="r-system-detail">--</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Annual Production</div>
+      <div class="result-value" id="r-annual-prod">--</div>
+      <div class="result-detail">Estimated kWh per year</div>
+    </div>
+    <div class="result-card highlight">
+      <div class="result-label">25-Year Savings</div>
+      <div class="result-value" id="r-25yr-savings">--</div>
+      <div class="result-detail">Assumes 3% annual rate increase</div>
+    </div>
+    <div class="result-card highlight">
+      <div class="result-label">Federal Tax Credit (30%)</div>
+      <div class="result-value" id="r-tax-credit">--</div>
+      <div class="result-detail" id="r-tax-detail">Applied to total system cost</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Payback Period</div>
+      <div class="result-value" id="r-payback">--</div>
+      <div class="result-detail">Years to recover your investment</div>
+    </div>
+    <div class="result-card">
+      <div class="result-label">Monthly Loan Payment</div>
+      <div class="result-value" id="r-monthly">--</div>
+      <div class="result-detail" id="r-monthly-detail">If financed over 25 years at 6.5%</div>
+    </div>
+  </div>
+
+  <div class="results-note">
+    <p>These numbers are rough estimates based on national averages. Your actual savings depend on your utility's rate structure, net metering policy, local incentives, and the specific quotes you receive from installers. The federal tax credit of 30% applies through 2032 under the Inflation Reduction Act, but you need enough tax liability to claim it. Consider getting at least three quotes from local installers for numbers specific to your home.</p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Viryd. All rights reserved.</p>
+</footer>
+
+<script>
+(function() {
+  "use strict";
+
+  var SUN_HOURS = {
+    AZ: 6.5, CA: 5.8, CO: 5.5, CT: 4.2, FL: 5.5,
+    GA: 5.2, HI: 5.9, IL: 4.3, MA: 4.2, MD: 4.5,
+    NC: 5.0, NJ: 4.4, NM: 6.4, NV: 6.3, NY: 4.1,
+    OH: 4.0, PA: 4.2, SC: 5.1, TX: 5.6, VA: 4.6
+  };
+
+  var COST_PER_WATT = 3.00;
+  var FEDERAL_CREDIT_RATE = 0.30;
+  var ELECTRICITY_INFLATION = 0.03;
+  var SYSTEM_EFFICIENCY = 0.80;
+  var LOAN_RATE = 0.065;
+  var LOAN_TERM_YEARS = 25;
+  var DEGRADATION_RATE = 0.005;
+
+  var btnEl = document.getElementById("calc-btn");
+  var errEl = document.getElementById("error-msg");
+  var resultsEl = document.getElementById("results-panel");
+
+  if (!btnEl || !errEl || !resultsEl) {
+    return;
+  }
+
+  btnEl.addEventListener("click", handleCalculate);
+
+  function handleCalculate() {
+    errEl.style.display = "none";
+    errEl.textContent = "";
+
+    var bill = parseFloat(document.getElementById("monthly-bill").value);
+    var rate = parseFloat(document.getElementById("elec-rate").value);
+    var stateCode = document.getElementById("state-select").value;
+    var orientFactor = parseFloat(document.getElementById("orientation").value);
+    var shadeFactor = parseFloat(document.getElementById("shading").value);
+
+    var validationError = validateInputs(bill, rate, stateCode);
+    if (validationError) {
+      showError(validationError);
+      return;
+    }
+
+    var results = computeSolarEstimate(
+      bill, rate, stateCode, orientFactor, shadeFactor
+    );
+    displayResults(results);
+  }
+
+  function validateInputs(bill, rate, stateCode) {
+    if (isNaN(bill) || bill < 20 || bill > 2000) {
+      return "Enter a monthly bill between $20 and $2,000.";
+    }
+    if (isNaN(rate) || rate < 0.05 || rate > 0.60) {
+      return "Enter an electricity rate between $0.05 and $0.60 per kWh.";
+    }
+    if (!stateCode || !SUN_HOURS[stateCode]) {
+      return "Select a state from the dropdown.";
+    }
+    return null;
+  }
+
+  function computeSolarEstimate(bill, rate, stateCode, orientFactor, shadeFactor) {
+    var sunHours = SUN_HOURS[stateCode];
+    var annualUsageKwh = (bill / rate) * 12;
+    var effectiveSunHours = sunHours * orientFactor * shadeFactor;
+    var systemSizeKw = annualUsageKwh / (effectiveSunHours * 365 * SYSTEM_EFFICIENCY);
+    var annualProductionKwh = systemSizeKw * effectiveSunHours * 365 * SYSTEM_EFFICIENCY;
+    var systemCostGross = systemSizeKw * 1000 * COST_PER_WATT;
+    var taxCredit = systemCostGross * FEDERAL_CREDIT_RATE;
+    var netCost = systemCostGross - taxCredit;
+    var savings25yr = compute25YearSavings(annualProductionKwh, rate);
+    var paybackYears = computePaybackYears(netCost, annualProductionKwh, rate);
+    var monthlyPayment = computeMonthlyLoan(netCost, LOAN_RATE, LOAN_TERM_YEARS);
+    var panelCount = Math.ceil((systemSizeKw * 1000) / 400);
+
+    return {
+      systemSizeKw: systemSizeKw,
+      annualProductionKwh: annualProductionKwh,
+      systemCostGross: systemCostGross,
+      taxCredit: taxCredit,
+      netCost: netCost,
+      savings25yr: savings25yr,
+      paybackYears: paybackYears,
+      monthlyPayment: monthlyPayment,
+      panelCount: panelCount
+    };
+  }
+
+  function compute25YearSavings(annualKwh, baseRate) {
+    var total = 0;
+    var currentRate = baseRate;
+    var currentProduction = annualKwh;
+    for (var year = 1; year <= 25; year++) {
+      total += currentProduction * currentRate;
+      currentRate *= (1 + ELECTRICITY_INFLATION);
+      currentProduction *= (1 - DEGRADATION_RATE);
+    }
+    return total;
+  }
+
+  function computePaybackYears(netCost, annualKwh, baseRate) {
+    var remaining = netCost;
+    var currentRate = baseRate;
+    var currentProduction = annualKwh;
+    for (var year = 1; year <= 30; year++) {
+      var yearSavings = currentProduction * currentRate;
+      remaining -= yearSavings;
+      if (remaining <= 0) {
+        var fractionOfYear = 1 + (remaining / yearSavings);
+        return Math.max(fractionOfYear, year - 1 + fractionOfYear);
+      }
+      currentRate *= (1 + ELECTRICITY_INFLATION);
+      currentProduction *= (1 - DEGRADATION_RATE);
+    }
+    return 30;
+  }
+
+  function computeMonthlyLoan(principal, annualRate, years) {
+    var monthlyRate = annualRate / 12;
+    var numPayments = years * 12;
+    if (monthlyRate === 0) {
+      return principal / numPayments;
+    }
+    var payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+                  (Math.pow(1 + monthlyRate, numPayments) - 1);
+    return payment;
+  }
+
+  function displayResults(r) {
+    document.getElementById("r-system-size").textContent = r.systemSizeKw.toFixed(1) + " kW";
+    document.getElementById("r-system-detail").textContent =
+      "About " + r.panelCount + " panels at $" + formatNum(r.systemCostGross) + " installed";
+    document.getElementById("r-annual-prod").textContent =
+      formatNum(Math.round(r.annualProductionKwh)) + " kWh";
+    document.getElementById("r-25yr-savings").textContent =
+      "$" + formatNum(Math.round(r.savings25yr));
+    document.getElementById("r-tax-credit").textContent =
+      "$" + formatNum(Math.round(r.taxCredit));
+    document.getElementById("r-tax-detail").textContent =
+      "Reduces cost to $" + formatNum(Math.round(r.netCost));
+    document.getElementById("r-payback").textContent =
+      r.paybackYears.toFixed(1) + " years";
+    document.getElementById("r-monthly").textContent =
+      "$" + Math.round(r.monthlyPayment) + "/mo";
+    document.getElementById("r-monthly-detail").textContent =
+      "$" + formatNum(Math.round(r.netCost)) + " financed at 6.5% over 25 years";
+
+    resultsEl.classList.add("visible");
+    resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.style.display = "block";
+    resultsEl.classList.remove("visible");
+  }
+
+  function formatNum(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+})();
+</script>
+
+</body>
+</html>
