@@ -23,25 +23,57 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "How I Set Up Level 2 EV Charging at Home",
-  "description": "What it actually costs and takes to install a Level 2 EV charger at home, from picking an EVSE to dealing with your electrical panel.",
-  "datePublished": "2026-05-18",
-  "dateModified": "2026-05-18",
-  "author": {
-    "@type": "Organization",
-    "name": "Viryd",
-    "url": "https://viryd.com/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Viryd",
-    "url": "https://viryd.com/"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://viryd.com/articles/ev-home-charging/"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://viryd.com/#organization",
+      "name": "Viryd",
+      "url": "https://viryd.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://viryd.com/#website",
+      "name": "Viryd",
+      "url": "https://viryd.com/",
+      "publisher": {
+        "@id": "https://viryd.com/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://viryd.com/articles/ev-home-charging/#webpage",
+      "url": "https://viryd.com/articles/ev-home-charging/",
+      "name": "How I Set Up Level 2 EV Charging at Home",
+      "description": "Level 2 charging adds about 25 to 30 miles of range per hour against 3 to 5 on a 120V outlet. My ChargePoint Home Flex and electrician work cost $829 in total. On the utility time-of-use plan, overnight charging at 8 cents per kWh cut the monthly cost from $52 to about $27.",
+      "isPartOf": {
+        "@id": "https://viryd.com/#website"
+      },
+      "dateModified": "2026-10-28",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://viryd.com/articles/ev-home-charging/#article",
+      "headline": "How I Set Up Level 2 EV Charging at Home",
+      "description": "Level 2 charging adds about 25 to 30 miles of range per hour against 3 to 5 on a 120V outlet. My ChargePoint Home Flex and electrician work cost $829 in total. On the utility time-of-use plan, overnight charging at 8 cents per kWh cut the monthly cost from $52 to about $27.",
+      "url": "https://viryd.com/articles/ev-home-charging/",
+      "datePublished": "2026-05-18",
+      "dateModified": "2026-10-28",
+      "author": {
+        "@id": "https://viryd.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://viryd.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://viryd.com/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://viryd.com/articles/ev-home-charging/#webpage"
+      },
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 </head>
@@ -62,7 +94,11 @@
 <article>
 
 <h1>How I Set Up Level 2 EV Charging at Home</h1>
-<div class="meta">Updated May 2026</div>
+<div class="meta">Published 2026-05-18 &middot; Updated 2026-10-28</div>
+<div class="answer">
+  <p>Level 2 charging adds about 25 to 30 miles of range per hour against 3 to 5 on a 120V outlet. My ChargePoint Home Flex and electrician work cost $829 in total. On the utility time-of-use plan, overnight charging at 8 cents per kWh cut the monthly cost from $52 to about $27.</p>
+  <p class="answer-date">Updated 2026-10-28</p>
+</div>
 
 <p>When I picked up my first EV last year, I figured I would just plug it into a regular outlet in the garage and call it done. That lasted about a week. A standard 120V outlet adds somewhere around 3 to 5 miles of range per hour of charging, which sounds fine until you pull into the driveway with 40 miles left and realize your morning commute is 55 miles. I spent a weekend researching Level 2 charging, called an electrician on Monday, and had a proper setup running within two weeks.</p>
 
@@ -116,9 +152,11 @@
 
 <h2>Monthly electricity cost</h2>
 
-<p>The average EV uses about 3 to 4 kWh per mile. Drive 1,000 miles a month and that is 300 to 400 kWh. At the national average of about 16 cents per kWh, expect $48 to $64 per month. In cheap-electricity states like Washington it might be $30 to $40. In California or Connecticut, closer to $70 to $90.</p>
+<p>The average EV needs about 0.3 to 0.4 kWh per mile. Drive 1,000 miles a month and that is 300 to 400 kWh. At the national average of about 16 cents per kWh, expect $48 to $64 per month. In cheap-electricity states like Washington it might be $30 to $40. In California or Connecticut, closer to $70 to $90.</p>
 
 <p>For comparison, a gas car getting 30 mpg at $3.50 per gallon costs about $117 for 1,000 miles. Even in expensive-electricity states, home charging is significantly cheaper. My own bill went up about $52 per month for roughly 1,100 miles of driving.</p>
+
+<p>If you want the array sized to the car rather than to the house, see <a href="/articles/solar-panels-to-charge-an-ev/">how many solar panels it takes to charge an EV</a>.</p>
 
 <h2>Smart charging and time-of-use rates</h2>
 

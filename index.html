@@ -25,11 +25,35 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Viryd",
-  "url": "https://viryd.com/",
-  "description": "Practical guides for home energy decisions. Independent research on solar, heat pumps, EVs, and efficiency upgrades.",
-  "sameAs": "https://github.com/theluckystrike/viryd-com"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://viryd.com/#organization",
+      "name": "Viryd",
+      "url": "https://viryd.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://viryd.com/#website",
+      "name": "Viryd",
+      "url": "https://viryd.com/",
+      "publisher": {
+        "@id": "https://viryd.com/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://viryd.com/#webpage",
+      "url": "https://viryd.com/",
+      "name": "Practical guides for home energy decisions",
+      "description": "Viryd publishes independent home energy guides on solar, heat pumps, EVs and efficiency upgrades. Every guide uses real numbers and honest tradeoffs, with no affiliate links and no sponsored content. Three tools cover solar payback, home wind power and a room-by-room energy audit. Start with the tool that matches the decision in front of you.",
+      "isPartOf": {
+        "@id": "https://viryd.com/#website"
+      },
+      "dateModified": "2026-10-28",
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 </head>
@@ -47,6 +71,10 @@
 <section class="hero">
   <h1>Practical guides for home energy decisions</h1>
   <p>I help homeowners figure out what actually makes sense for solar, heat pumps, EVs, and efficiency upgrades. Real numbers, honest tradeoffs, no affiliate games.</p>
+  <div class="answer">
+    <p>Viryd publishes independent home energy guides on solar, heat pumps, EVs and efficiency upgrades. Every guide uses real numbers and honest tradeoffs, with no affiliate links and no sponsored content. Three tools cover solar payback, home wind power and a room-by-room energy audit. Start with the tool that matches the decision in front of you.</p>
+    <p class="answer-date">Updated 2026-10-28</p>
+  </div>
 </section>
 
 <div class="container">
@@ -126,6 +154,12 @@
         <p>How to get solar savings without putting panels on your roof, and what to watch out for in the contracts.</p>
       </a>
 
+      <a href="/articles/solar-panels-to-charge-an-ev/" class="card" style="text-decoration:none;color:inherit">
+        <span class="tag">EV</span>
+        <h3>Solar Panels for an EV</h3>
+        <p>How many extra panels an electric car needs, worked out from its monthly kWh and your peak sun hours.</p>
+      </a>
+
     </div>
 
     <h3>Heating and Cooling</h3>
@@ -153,6 +187,12 @@
         <span class="tag">HVAC</span>
         <h3>Smart Thermostat Savings</h3>
         <p>How much a smart thermostat actually saves, which ones work best, and settings that make a difference.</p>
+      </a>
+
+      <a href="/articles/heat-pump-water-heater-electrical-requirements/" class="card" style="text-decoration:none;color:inherit">
+        <span class="tag">Efficiency</span>
+        <h3>Heat Pump Water Heater Circuit</h3>
+        <p>The 240V circuit, the 30-amp breaker and the condensate drain, before you order the unit.</p>
       </a>
 
     </div>

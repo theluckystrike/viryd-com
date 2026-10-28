@@ -25,3 +25,9 @@ ul,ol{margin:0 0 16px 24px}li{margin-bottom:6px}
 article img{max-width:100%;border-radius:8px;margin:16px 0}
 footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:40px 24px;margin-top:64px;text-align:center;font-size:.85rem;color:var(--text-light)}
 @media(max-width:600px){.hero{padding:40px 16px}.hero h1{font-size:1.8rem}h1{font-size:1.6rem}.card-grid{grid-template-columns:1fr}}
+.answer{border-left:4px solid var(--green);background:var(--bg-alt);padding:16px 20px;margin:0 0 32px;border-radius:0 6px 6px 0}
+.answer p{margin:0 0 8px;font-size:1.05rem;color:var(--text)}
+.answer .answer-date{font-size:.85rem;color:var(--text-light);margin:0}
+.hero .answer{background:rgba(255,255,255,.12);border-left-color:#fff;max-width:640px;margin:0 auto;text-align:left}
+.hero .answer p{color:#fff;font-size:1rem}
+.hero .answer .answer-date{color:rgba(255,255,255,.85)}
